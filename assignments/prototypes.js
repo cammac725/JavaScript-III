@@ -62,6 +62,7 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
 
 function Villain(villAttrs) {
   Humanoid.call(this, villAttrs);
+  this.damage = villAttrs.damage;
   this.bloodLoss = function () {
     if (this.healthPoints > 0) {
       --this.healthPoints;
@@ -71,11 +72,16 @@ function Villain(villAttrs) {
     }
   }
 }
+Villain.prototype.attack = function (hero) {
+  hero.healthPoints = hero.healthPoints - hero.damage;
+  return `${this.name} attacked ${hero.name} for ${this.damage}`;
+}
 Villain.prototype = Object.create(Humanoid.prototype);
 
 
 function Hero(heroAttrs) {
   Humanoid.call(this, heroAttrs);
+  this.damage = heroAttrs.damage;
   this.bloodLoss = function () {
     if (this.healthPoints > 0) {
       --this.healthPoints;
@@ -84,6 +90,10 @@ function Hero(heroAttrs) {
       this.destroy();
     }
   }
+}
+Hero.prototype.attack = function (villain) {
+  villain.healthPoints = villain.healthPoints - hero.damage;
+  return `${this.name} attacked ${villain.name} for ${this.damage}`;
 }
 Hero.prototype = Object.create(Humanoid.prototype);
 
@@ -95,7 +105,7 @@ Hero.prototype = Object.create(Humanoid.prototype);
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-const goblin = new Villain({
+const villain = new Villain({
   createdAt: new Date(),
   dimensions: {
     length: 1,
@@ -108,10 +118,11 @@ const goblin = new Villain({
   weapons: [
     'Black Cudgel',
   ],
+  damage: 2,
   language: 'Goblin',
 });
 
-const hunter = new Hero({
+const hero = new Hero({
   createdAt: new Date(),
   dimensions: {
     length: 2,
@@ -124,6 +135,7 @@ const hunter = new Hero({
   weapons: [
     'Tickling Knife',
   ],
+  damage: 3,
   language: 'Common Tongue',
 });
 
@@ -177,6 +189,8 @@ const archer = new Humanoid({
   language: 'Elvish',
 });
 
+
+
 console.log(mage.createdAt); // Today's date
 console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
 console.log(swordsman.healthPoints); // 15
@@ -188,8 +202,10 @@ console.log(archer.greet()); // Lilith offers a greeting in Elvish.
 console.log(mage.takeDamage()); // Bruce took damage.
 console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.\
 
-console.log(goblin.bloodLoss());
-console.log(hunter.bloodLoss());
+console.log(hero.attack());
+console.log(villain.healthPoints);
+console.log(villain.bloodLoss());
+console.log(hero.bloodLoss());
 
 
   // Stretch task: 
