@@ -59,6 +59,26 @@ function Humanoid(humanAttrs) {
 }
 Humanoid.prototype = Object.create(CharacterStats.prototype);
 
+
+function Villain(villAttrs) {
+  Humanoid.call(this, villAttrs);
+  this.bloodLoss = function () {
+    --this.healthPoints;
+    return `${this.name} has lost blood and has only ${this.healthPoints} health points left!`;
+  }
+}
+Villain.prototype = Object.create(Humanoid.prototype);
+
+
+function Hero(heroAttrs) {
+  Humanoid.call(this, heroAttrs);
+  this.bloodLoss = function () {
+    --this.healthPoints;
+    return `${this.name} has lost blood and has only ${this.healthPoints} health points left!`;
+  }
+}
+Hero.prototype = Object.create(Humanoid.prototype);
+
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -67,6 +87,37 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
+const goblin = new Villain({
+  createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 1,
+    height: 2,
+  },
+  healthPoints: 10,
+  name: 'Gooby',
+  team: 'Black Deal',
+  weapons: [
+    'Black Cudgel',
+  ],
+  language: 'Goblin',
+});
+
+const hunter = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 2,
+    width: 2,
+    height: 3,
+  },
+  healthPoints: 15,
+  name: 'Carver',
+  team: 'Green Patrol',
+  weapons: [
+    'Tickling Knife',
+  ],
+  language: 'Common Tongue',
+});
 
 const mage = new Humanoid({
   createdAt: new Date(),
@@ -118,16 +169,18 @@ const archer = new Humanoid({
   language: 'Elvish',
 });
 
-console.log(mage.createdAt); // Today's date
-console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
-console.log(swordsman.healthPoints); // 15
-console.log(mage.name); // Bruce
-console.log(swordsman.team); // The Round Table
-console.log(mage.weapons); // Staff of Shamalama
-console.log(archer.language); // Elvish
-console.log(archer.greet()); // Lilith offers a greeting in Elvish.
-console.log(mage.takeDamage()); // Bruce took damage.
-console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+// console.log(mage.createdAt); // Today's date
+// console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
+// console.log(swordsman.healthPoints); // 15
+// console.log(mage.name); // Bruce
+// console.log(swordsman.team); // The Round Table
+// console.log(mage.weapons); // Staff of Shamalama
+// console.log(archer.language); // Elvish
+// console.log(archer.greet()); // Lilith offers a greeting in Elvish.
+// console.log(mage.takeDamage()); // Bruce took damage.
+// console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.\
+
+console.log(goblin.bloodLoss());
 
 
   // Stretch task: 
