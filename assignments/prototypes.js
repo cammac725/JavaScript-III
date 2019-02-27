@@ -63,8 +63,12 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
 function Villain(villAttrs) {
   Humanoid.call(this, villAttrs);
   this.bloodLoss = function () {
-    --this.healthPoints;
-    return `${this.name} has lost blood and has only ${this.healthPoints} health points left!`;
+    if (this.healthPoints > 0) {
+      --this.healthPoints;
+      return `${this.name} has lost blood and has only ${this.healthPoints} health points left!`;
+    } else {
+      this.destroy();
+    }
   }
 }
 Villain.prototype = Object.create(Humanoid.prototype);
@@ -73,8 +77,12 @@ Villain.prototype = Object.create(Humanoid.prototype);
 function Hero(heroAttrs) {
   Humanoid.call(this, heroAttrs);
   this.bloodLoss = function () {
-    --this.healthPoints;
-    return `${this.name} has lost blood and has only ${this.healthPoints} health points left!`;
+    if (this.healthPoints > 0) {
+      --this.healthPoints;
+      return `${this.name} has lost blood and has only ${this.healthPoints} health points left!`;
+    } else {
+      this.destroy();
+    }
   }
 }
 Hero.prototype = Object.create(Humanoid.prototype);
