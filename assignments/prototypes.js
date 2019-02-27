@@ -63,11 +63,6 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
 function Villain(villAttrs) {
   Humanoid.call(this, villAttrs);
   this.damage = villAttrs.damage;
-  // this.bloodLoss = function () {
-  //   if (this.healthPoints <= 0) {
-  //     this.destroy();
-  //   }
-  // }
 }
 Villain.prototype.attack = function (hero) {
   hero.healthPoints = hero.healthPoints - hero.damage;
@@ -79,11 +74,6 @@ Villain.prototype = Object.create(Humanoid.prototype);
 function Hero(heroAttrs) {
   Humanoid.call(this, heroAttrs);
   this.damage = heroAttrs.damage;
-  // this.bloodLoss = function () {
-  //   if (this.healthPoints <= 0) {
-  //     this.destroy();
-  //   }
-  // }
 }
 Hero.prototype.attack = function (villain) {
   villain.healthPoints = villain.healthPoints - hero.damage;
