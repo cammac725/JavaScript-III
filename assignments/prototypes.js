@@ -60,6 +60,17 @@ function Humanoid(humanAttrs) {
 Humanoid.prototype = Object.create(CharacterStats.prototype);
 
 
+function Hero(heroAttrs) {
+  Humanoid.call(this, heroAttrs);
+  this.damage = heroAttrs.damage;
+}
+Hero.prototype.attack = function (villain) {
+  villain.healthPoints = villain.healthPoints - hero.damage;
+  return `${this.name} attacked ${villain.name} for ${this.damage}`;
+}
+Hero.prototype = Object.create(Humanoid.prototype);
+
+
 function Villain(villAttrs) {
   Humanoid.call(this, villAttrs);
   this.damage = villAttrs.damage;
@@ -70,16 +81,6 @@ Villain.prototype.attack = function (hero) {
 }
 Villain.prototype = Object.create(Humanoid.prototype);
 
-
-function Hero(heroAttrs) {
-  Humanoid.call(this, heroAttrs);
-  this.damage = heroAttrs.damage;
-}
-Hero.prototype.attack = function (villain) {
-  villain.healthPoints = villain.healthPoints - hero.damage;
-  return `${this.name} attacked ${villain.name} for ${this.damage}`;
-}
-Hero.prototype = Object.create(Humanoid.prototype);
 
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -186,10 +187,10 @@ console.log(archer.greet()); // Lilith offers a greeting in Elvish.
 console.log(mage.takeDamage()); // Bruce took damage.
 console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.\
 
-// console.log(hero.attack());
-// console.log(villain.healthPoints);
-console.log(villain.bloodLoss());
-console.log(hero.bloodLoss());
+console.log(hero.attack());
+console.log(villain.healthPoints);
+// console.log(villain.bloodLoss());
+// console.log(hero.bloodLoss());
 
 
   // Stretch task: 
