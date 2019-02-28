@@ -60,32 +60,27 @@ function Humanoid(humanAttrs) {
 Humanoid.prototype = Object.create(CharacterStats.prototype);
 
 
+function Hero(heroAttrs) {
+  Humanoid.call(this, heroAttrs);
+  this.damage = heroAttrs.damage;
+}
+Hero.prototype.attack = function (villain) {
+  villain.healthPoints = villain.healthPoints - hero.damage;
+  return `${this.name} attacked ${villain.name} for ${this.damage}`;
+}
+Hero.prototype = Object.create(Humanoid.prototype);
+
+
 function Villain(villAttrs) {
   Humanoid.call(this, villAttrs);
-  this.bloodLoss = function () {
-    if (this.healthPoints > 0) {
-      --this.healthPoints;
-      return `${this.name} has lost blood and has only ${this.healthPoints} health points left!`;
-    } else {
-      this.destroy();
-    }
-  }
+  this.damage = villAttrs.damage;
+}
+Villain.prototype.attack = function (hero) {
+  hero.healthPoints = hero.healthPoints - hero.damage;
+  return `${this.name} attacked ${hero.name} for ${this.damage}`;
 }
 Villain.prototype = Object.create(Humanoid.prototype);
 
-
-function Hero(heroAttrs) {
-  Humanoid.call(this, heroAttrs);
-  this.bloodLoss = function () {
-    if (this.healthPoints > 0) {
-      --this.healthPoints;
-      return `${this.name} has lost blood and has only ${this.healthPoints} health points left!`;
-    } else {
-      this.destroy();
-    }
-  }
-}
-Hero.prototype = Object.create(Humanoid.prototype);
 
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -95,7 +90,7 @@ Hero.prototype = Object.create(Humanoid.prototype);
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-const goblin = new Villain({
+const villain = new Villain({
   createdAt: new Date(),
   dimensions: {
     length: 1,
@@ -108,10 +103,11 @@ const goblin = new Villain({
   weapons: [
     'Black Cudgel',
   ],
+  damage: 2,
   language: 'Goblin',
 });
 
-const hunter = new Hero({
+const hero = new Hero({
   createdAt: new Date(),
   dimensions: {
     length: 2,
@@ -124,6 +120,7 @@ const hunter = new Hero({
   weapons: [
     'Tickling Knife',
   ],
+  damage: 3,
   language: 'Common Tongue',
 });
 
@@ -177,6 +174,8 @@ const archer = new Humanoid({
   language: 'Elvish',
 });
 
+
+
 console.log(mage.createdAt); // Today's date
 console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
 console.log(swordsman.healthPoints); // 15
@@ -188,8 +187,10 @@ console.log(archer.greet()); // Lilith offers a greeting in Elvish.
 console.log(mage.takeDamage()); // Bruce took damage.
 console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.\
 
-console.log(goblin.bloodLoss());
-console.log(hunter.bloodLoss());
+console.log(hero.attack());
+console.log(villain.healthPoints);
+// console.log(villain.bloodLoss());
+// console.log(hero.bloodLoss());
 
 
   // Stretch task: 
